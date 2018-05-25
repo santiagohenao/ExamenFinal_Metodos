@@ -16,3 +16,40 @@ t = np.linspace( 0, (n-1)*dt, n)
 y = np.sin(2 * np.pi * f * t) + np.cos(2 * np.pi * f * t * t)
 noise = 1.4*(np.random.rand(n)+0.7)
 y  =  y + noise
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+def fourier(time_arr,g_arr,freq):
+    s=0j
+    for i in range(len(time_arr)):
+        s+=g_arr[i]*np.exp(-2*np.pi*1j*freq*time_arr[i])
+    return s
+
+def i_fourier(f_arr,transf_arr,time):
+    g=0j
+    for i in range(len(f_arr)):
+        g+=transf_arr[i]*np.exp(2*np.pi*1j*f_arr[i]*time)
+    return g
+
+fspace=np.linspace(0,10000,len(t))
+
+sspace=np.array([fourier(t,y,freq) for freq in fspace])
+
+plt.figure()
+plt.scatter(t,y,s=10)
+plt.savefig("señal.png")
+
+plt.figure()
+plt.scatter(fspace,np.sqrt(sspace.real**2+sspace.imag**2),s=1,c='k')
+plt.xlim([0,1000])
+plt.savefig("fourier.png")
+
+tspace=t
+yspace=np.array([i_fourier(fspace,sspace,time_val) for time_val in tspace])
+
+plt.figure()
+plt.scatter(tspace,yspace.real,s=10,c='k')
+#plt.xlim([0,1000])
+plt.savefig("filtro.png")
