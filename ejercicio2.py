@@ -6,5 +6,9 @@ import numpy as np
 x = np.int_(np.random.random(100)*1000)
 print(x)
 
-
+for i in x:
+    if(i>800):
+        break
+    elif(i%2==1):
+        print(i)
 
