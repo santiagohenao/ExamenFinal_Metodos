@@ -50,6 +50,6 @@ tspace=t
 yspace=np.array([i_fourier(fspace,sspace,time_val) for time_val in tspace])
 
 plt.figure()
-plt.scatter(tspace,yspace.real,s=10,c='k')
+plt.scatter(tspace,np.sqrt(yspace.real**2+yspace.imag**2)/(n),s=10,c='k')
 #plt.xlim([0,1000])
 plt.savefig("filtro.png")
